@@ -1,0 +1,22 @@
+{
+	"author": "Michel Boudreau",
+	"name": "angular-service-factory",
+	"version": "1.0.0",
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:mboudreau/angular-service-factory.git"
+	},
+	"main": "angular-service-factory.js",
+	"dependencies": {
+		"angular": "1.3.0-rc.5"
+	},
+	"devDependencies": {
+		"angular-mocks": "1.3.0-rc.5"
+	},
+	"resolutions": {
+		"angular": "1.3.0-rc.5",
+		"angular-mocks": "1.3.0-rc.5"
+	},
+	"ignore": [
+	]
+}
