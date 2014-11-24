@@ -55,12 +55,23 @@ describe('Service Factory', function () {
 		expect(new ServiceFactory(base).patch()).toEqual(jasmine.objectContaining(deferred.promise));
 	}));
 
-	it('test data passing', inject(function (ServiceFactory, $httpBackend) {
+	it('data should be serialized properly', inject(function (ServiceFactory, $httpBackend) {
 		var data = {id: 34242, type: 'tag', title: 'weee'};
-		$httpBackend.when('GET', /.*/, function(result){
-			expect(angular.toJson(result)).toEqual(data);
+		$httpBackend.when('POST', /.*/, function(result){
+			expect(angular.fromJson(result)).toEqual(data);
+			return true;
 		}).respond(true);
-		new ServiceFactory(base).get(null, data);
+		new ServiceFactory(base).post(null, data);
+		$httpBackend.flush();
+	}));
+
+	it('data should ignore variables starting with $$ and $', inject(function (ServiceFactory, $httpBackend) {
+		var data = {id: 34242, $$type: 'tag', $title: 'weee'};
+		$httpBackend.when('POST', /.*/, function(result){
+			expect(angular.fromJson(result)).toEqual({id:34242});
+			return true;
+		}).respond(true);
+		new ServiceFactory(base).post(null, data);
 		$httpBackend.flush();
 	}));
 });
