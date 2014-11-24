@@ -1,3 +1,4 @@
+(function ( window, angular, undefined ) {
 angular.module('codinghitchhiker.ServiceFactory', [])
 
 	.constant('ServiceConstant', {
@@ -5,7 +6,7 @@ angular.module('codinghitchhiker.ServiceFactory', [])
 		OFFLINE: 0
 	})
 
-	.factory('ServiceFactory', function ($http, $q, $log, ServiceConstant) {
+	.factory('ServiceFactory', ['$http', '$q', '$log', 'ServiceConstant', function ($http, $q, $log, ServiceConstant) {
 
 		var ServiceFactory = function (url) {
 			if (!(this instanceof ServiceFactory)) {
@@ -103,4 +104,5 @@ angular.module('codinghitchhiker.ServiceFactory', [])
 		};
 
 		return ServiceFactory;
-	});
+	}]);
+})( window, window.angular );
