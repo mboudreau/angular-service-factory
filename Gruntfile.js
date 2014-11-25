@@ -36,7 +36,9 @@ module.exports = function (grunt) {
 			},
 			release: {
 				src: ['bower.json', 'README.md'],
-				dest:'<%= release_dir %>/bower.json'
+				dest:'<%= release_dir %>/',
+				cwd:'.',
+				expand:true
 			}
 		},
 
