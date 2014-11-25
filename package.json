@@ -1,7 +1,7 @@
 {
 	"author": "Michel Boudreau",
 	"name": "angular-service-factory",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"dependencies": {},
 	"devDependencies": {
 		"grunt": "~0.4.5",
