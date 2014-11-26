@@ -6,7 +6,7 @@ angular.module('codinghitchhiker.ServiceFactory', [])
 		OFFLINE: 0
 	})
 
-	.factory('ServiceFactory', ['$http', '$q', '$log', 'ServiceConstant', function ($http, $q, $log, ServiceConstant) {
+	.factory('ServiceFactory', ['$http', '$q', '$log', '$rootScope', 'ServiceConstant', function ($http, $q, $log, $rootScope, ServiceConstant) {
 
 		var ServiceFactory = function (url) {
 			if (!(this instanceof ServiceFactory)) {
@@ -88,12 +88,14 @@ angular.module('codinghitchhiker.ServiceFactory', [])
 				}
 				if (!id) {
 					id = response.data.id;
-					$log.warning('Error id "' + id + '" is missing from ServiceConstant');
+					$log.warn('Error id "' + id + '" is missing from ServiceConstant');
 				}
 				error.id = id;
 			}
 
-			// TODO: add rootscope dispatch?
+			// Dispatch error on rootscope
+			$rootScope.$emit('ERROR', error);
+
 			// TODO: add logging of said error if possible
 
 			return $q.reject(error);
