@@ -55,9 +55,25 @@ describe('Service Factory', function () {
 		expect(new ServiceFactory(base).patch()).toEqual(jasmine.objectContaining(deferred.promise));
 	}));
 
+	it('query strings should be added properly', inject(function (ServiceFactory, $httpBackend) {
+		var query = {id: '34242', type: 'tag', title: 'weee'};
+		$httpBackend.when('GET', function (url) {
+			var array = url.split('?')[1].split('&');
+			var queries = {};
+			for (var i = 0, len = array.length; i < len; i++) {
+				var val = array[i].split('=');
+				queries[val[0]] = val[1];
+			}
+			expect(query).toEqual(queries);
+			return true;
+		}).respond(true);
+		new ServiceFactory(base).get(query);
+		$httpBackend.flush();
+	}));
+
 	it('data should be serialized properly', inject(function (ServiceFactory, $httpBackend) {
 		var data = {id: 34242, type: 'tag', title: 'weee'};
-		$httpBackend.when('POST', /.*/, function(result){
+		$httpBackend.when('POST', /.*/, function (result) {
 			expect(angular.fromJson(result)).toEqual(data);
 			return true;
 		}).respond(true);
@@ -67,8 +83,8 @@ describe('Service Factory', function () {
 
 	it('data should ignore variables starting with $$ and $', inject(function (ServiceFactory, $httpBackend) {
 		var data = {id: 34242, $$type: 'tag', $title: 'weee'};
-		$httpBackend.when('POST', /.*/, function(result){
-			expect(angular.fromJson(result)).toEqual({id:34242});
+		$httpBackend.when('POST', /.*/, function (result) {
+			expect(angular.fromJson(result)).toEqual({id: 34242});
 			return true;
 		}).respond(true);
 		new ServiceFactory(base).post(null, data);
