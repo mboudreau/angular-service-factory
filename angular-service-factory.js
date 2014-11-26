@@ -30,7 +30,7 @@ angular.module('codinghitchhiker.ServiceFactory', [])
 		var call = function (method) {
 			return function (params, data, config) {
 				// Remove all 'private' variables starting with '$'
-				return $http[method](this.baseUrl, toJson(data), angular.extend(config || {}, {params: params})).then(handleSuccess, handleError);
+				return $http(angular.extend(config || {}, {method: method, url:this.baseUrl, params: params, data:toJson(data)})).then(handleSuccess, handleError);
 			};
 		};
 
