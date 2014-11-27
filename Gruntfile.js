@@ -22,6 +22,8 @@ module.exports = function (grunt) {
 	var userConfig = require('./build.config.js');
 
 	var taskConfig = {
+        pkg: grunt.file.readJSON('./bower.json'),
+
 		clean: [
 			'<%= build_dir %>',
 			'<%= release_dir %>'
@@ -49,7 +51,7 @@ module.exports = function (grunt) {
 					'<%= build_dir %>/src/**/*.js',
 					'module.suffix'
 				],
-				dest: '<%= release_dir %>/angular-service-factory.js'
+				dest: '<%= release_dir %>/<%= pkg.name %>.js'
 			}
 		},
 
